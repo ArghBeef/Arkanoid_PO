@@ -4,7 +4,7 @@
 #include <cstdio>
 #include "Ball.h"
 #include "Player.h"
-#include "Block.h" // Include the Block class header
+#include "Block.h"
 
 using namespace sf;
 using namespace std;
@@ -54,7 +54,7 @@ int main() {
         }
 
         window.clear();
-        blocks.Draw(window); // Draw all blocks using Block class method
+        blocks.Draw(window);
         plotinka.Draw(window);
         ball.Draw(window);
         window.draw(text);
