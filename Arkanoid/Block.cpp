@@ -46,8 +46,11 @@ void Block::CheckBlockCollision(Ball& ball, int& score) {
     for (int i = 0; i < BLOCK_NUM; i++) {
         if (!isDestroyed(i) && FloatRect(ball.GetPosX() - 25.0f, ball.GetPosY() - 25.0f, 25.0f * 2, 25.0f * 2).intersects(getBounds(i))) {
 
-            destroy(i);
             ball.SetVelocity(ball.GetVelX(), -ball.GetVelY());
+            if (blocke[i].getFillColor() == Color::White) {
+                return;
+            }
+            destroy(i);
             score++;
             break;
         }
