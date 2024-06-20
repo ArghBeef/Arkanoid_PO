@@ -10,9 +10,12 @@ private:
     float speed;
 
 public:
+    int score = 0;
     Player(float startX, float startY, float width, float height);
 
     void InputUpdate();
+    float GetPosX();
+    float GetPosY();
     //void update();
     void Draw(RenderWindow& window);
     FloatRect getBounds();

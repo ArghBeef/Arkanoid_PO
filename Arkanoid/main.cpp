@@ -2,62 +2,91 @@
 #include <time.h>
 #include <cstdlib>
 #include <cstdio>
+#include <vector>
+
 #include "Ball.h"
 #include "Player.h"
 #include "Block.h"
+#include "Bonus.h"
+#include "Game.h"
 
 using namespace sf;
 using namespace std;
 
 int main() {
-
-    RenderWindow window(VideoMode(1020, 820), "ARKANOID");
+    RenderWindow window(VideoMode(1025, 820), "ARKANOID");
     srand(time(0));
+    window.setFramerateLimit(120);
 
-    int score = 0;
+    int currentLevel = 1;
+    int currentScene = Game::MENU;
+    Game game;
 
     Block blocks;
-    blocks.Generate();
+    blocks.LoadLevel(currentLevel);
 
     Player plotinka(450, 780, 120.0f, 25.0f);
-    Ball ball(25.0f, -0.1f, -0.1f, 510, 760);
+    vector<Ball> balls;
+    balls.push_back(Ball(25.0f, -1.5f, -1.5f, 510, 760));
+    Bonus bonusik;
 
     Font font;
     Text text;
-    if (!font.loadFromFile("tf2.ttf"))
-    {
-        printf("ERROR");
-        exit(0);
+    Text infoText;
+    if (!font.loadFromFile("tf2.ttf")) {
+        printf("ERROR: Font file could not be loaded!");
+        exit(1);
     }
     text.setFont(font);
     text.setCharacterSize(28);
     text.setPosition(0, 745);
+    text.setFillColor(Color::White);
 
-    text.setFillColor(sf::Color::White);
+    infoText.setFont(font);
+    infoText.setCharacterSize(24);
+    infoText.setPosition(412, 200); // Position below the buttons
+    infoText.setFillColor(Color::White);
+
+    // Create a clock to handle the delay
+    Clock clock;
+    bool gameStarted = false;
+    const float delay = 3.0f;
 
     while (window.isOpen()) {
+        Vector2f mousePos = window.mapPixelToCoords(Mouse::getPosition(window));
+
         Event evnt;
         while (window.pollEvent(evnt)) {
             if (evnt.type == Event::Closed)
                 window.close();
-        }
-
-        plotinka.InputUpdate();
-        ball.Update();
-        plotinka.CheckPlayerCollision(ball);
-
-        blocks.CheckBlockCollision(ball,score);
-        text.setString("Score: " + to_string(score));
-
-        if (ball.out) {
-            window.close();
+            if (evnt.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::E)) {
+                if (currentLevel != 7)
+                    blocks.LoadLevel(++currentLevel);
+                else
+                    currentLevel = 1;
+            }
+            if (evnt.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::R))
+                blocks.scoremax--;
+                //blocks.DestroyLevel();
         }
 
         window.clear();
-        blocks.Draw(window);
-        plotinka.Draw(window);
-        ball.Draw(window);
-        window.draw(text);
+
+        switch (currentScene)
+        {
+        case Game::MENU:
+            game.MenuLoad(window, infoText, currentScene, clock, balls, mousePos);
+            break;
+
+        case Game::GAMING:
+            game.GameLoadScenario(window, blocks, plotinka, balls, bonusik, text, currentLevel, clock, gameStarted, delay, currentScene);
+            break;
+
+        case Game::ENDSCREEN:
+            game.EndLoad(window, infoText, plotinka.score, mousePos);
+            break;
+        }
+
         window.display();
     }
 

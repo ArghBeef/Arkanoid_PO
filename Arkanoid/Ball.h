@@ -11,6 +11,7 @@ private:
 	float x, y;
 
 public:
+	int ballsnum = 1;
 	Ball(float r, float xvel, float yvel, float startx, float starty);
 	bool out = false;
 	void Update();
@@ -20,5 +21,5 @@ public:
 	float GetPosY();
 	float GetVelX();
 	float GetVelY();
-	void SetVel(float xvel, float yvel);
+	float GetRadius();
 };
