@@ -14,7 +14,7 @@ class Bonus {
 private:
     RectangleShape bonusik[BONUS_NUM];
     bool isDropped[BONUS_NUM];
-    float speed = 1.8f;
+    float speed = 1.2f;
 public:
     Bonus();
     void Create(int type, float x, float y);

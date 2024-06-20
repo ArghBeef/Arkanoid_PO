@@ -41,6 +41,7 @@ void Player::Draw(RenderWindow& window) {
 //похуй закинь в гпт і хай розкаже як це ну запутано похуй
 void Player::CheckPlayerCollision(Ball& ball) {
     if (FloatRect(ball.GetPosX() - 25.0f, ball.GetPosY() - 25.0f, 25.0f * 2, 25.0f * 2).intersects(plotina.getGlobalBounds())) {
-        ball.SetVelocity(ball.GetVelX(), -(static_cast<float>(rand()) / RAND_MAX * 1.5f + 1.0f));
+        
+        ball.SetVelocity(ball.GetVelX(), -(1.0f + static_cast<float>(rand()) / RAND_MAX * 0.5f));
     }
 }

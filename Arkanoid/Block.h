@@ -15,7 +15,7 @@ private:
     int block_count;
     RectangleShape blocke[BLOCK_NUM];
     bool destroyed[BLOCK_NUM];
-    string maps[LEVELS] = {"map01.txt","map02.txt", "map03.txt", "map04.txt", "map05.txt", "map06.txt", "map07.txt", "map08.txt" };
+    string maps[LEVELS] = {"map01.txt","map02.txt", "map03.txt", "map04.txt", "map05.txt", "map06.txt", "map07.txt", "map08.txt"};
 
 public:
     int currentlevel;

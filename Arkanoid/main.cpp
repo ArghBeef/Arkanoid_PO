@@ -16,7 +16,7 @@ using namespace std;
 int main() {
     RenderWindow window(VideoMode(1025, 820), "ARKANOID");
     srand(time(0));
-    window.setFramerateLimit(120);
+    window.setFramerateLimit(280);
 
     int currentLevel = 1;
     int currentScene = Game::MENU;
@@ -44,13 +44,12 @@ int main() {
 
     infoText.setFont(font);
     infoText.setCharacterSize(24);
-    infoText.setPosition(412, 200); // Position below the buttons
+    infoText.setPosition(412, 200);
     infoText.setFillColor(Color::White);
 
-    // Create a clock to handle the delay
     Clock clock;
     bool gameStarted = false;
-    const float delay = 3.0f;
+    float delay = 3.0f;
 
     while (window.isOpen()) {
         Vector2f mousePos = window.mapPixelToCoords(Mouse::getPosition(window));
@@ -60,7 +59,7 @@ int main() {
             if (evnt.type == Event::Closed)
                 window.close();
             if (evnt.type == Event::KeyPressed && Keyboard::isKeyPressed(Keyboard::E)) {
-                if (currentLevel != 7)
+                if (currentLevel != LEVELS)
                     blocks.LoadLevel(++currentLevel);
                 else
                     currentLevel = 1;
