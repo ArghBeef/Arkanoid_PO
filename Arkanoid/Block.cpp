@@ -46,7 +46,7 @@ void Block::LoadLevel(int level) {
     block_count = 0;
     scoremax = 0;
 
-    while (getline(file, line) && j < 8) {  // Read each line from the file
+    while (getline(file, line) && j < 8) {
         for (int i = 0; i < line.length() && i < 13; i++) {
             char type = line[i];
             blocke[block_count].setSize(Vector2f(78.0f, 45.0f));
@@ -59,14 +59,14 @@ void Block::LoadLevel(int level) {
                 continue;
             case '1':
                 blocke[block_count].setFillColor(Color::Red);
-                scoremax++;  // Increment score for each block
+                scoremax++;
                 break;
             case '2':
                 blocke[block_count].setFillColor(Color::White);
                 break;
             default:
-                destroyed[block_count] = true;  // No block to display
-                continue;  // Skip the rest and move to the next block
+                destroyed[block_count] = true; 
+                continue;
             }
 
             block_count++;
